@@ -1,0 +1,148 @@
+{
+  "name": "BorrowRequest",
+  "type": "object",
+  "properties": {
+    "request_ref": {
+      "type": "string",
+      "description": "Reference shared by every line of one student request"
+    },
+    "borrower_id": {
+      "type": "string"
+    },
+    "borrower_name": {
+      "type": "string"
+    },
+    "id_number": {
+      "type": "string"
+    },
+    "course_section": {
+      "type": "string"
+    },
+    "contact": {
+      "type": "string"
+    },
+    "item_id": {
+      "type": "string"
+    },
+    "asset_tag": {
+      "type": "string"
+    },
+    "item_name": {
+      "type": "string"
+    },
+    "qty": {
+      "type": "number",
+      "default": 1
+    },
+    "released_qty": {
+      "type": "number",
+      "default": 0
+    },
+    "purpose": {
+      "type": "string"
+    },
+    "needed_until": {
+      "type": "string",
+      "format": "date"
+    },
+    "requested_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "End of the five-minute pre-borrow window"
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "released_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "toolkeeper": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Pending Release",
+        "In Progress",
+        "Partially Released",
+        "Completed",
+        "Expired",
+        "Cancelled",
+        "Rejected"
+      ],
+      "enumColors": [
+        "yellow",
+        "blue",
+        "purple",
+        "green",
+        "gray",
+        "gray",
+        "red"
+      ],
+      "default": "Pending Release"
+    },
+    "staff_note": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "borrower_id",
+    "item_id",
+    "qty"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        }
+      ]
+    },
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

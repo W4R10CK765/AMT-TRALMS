@@ -1,0 +1,149 @@
+{
+  "name": "Loan",
+  "type": "object",
+  "properties": {
+    "trans_no": {
+      "type": "string"
+    },
+    "request_ref": {
+      "type": "string",
+      "description": "Borrow request reference this release came from"
+    },
+    "borrower_id": {
+      "type": "string"
+    },
+    "borrower_name": {
+      "type": "string"
+    },
+    "borrower_id_number": {
+      "type": "string"
+    },
+    "course_section": {
+      "type": "string"
+    },
+    "purpose": {
+      "type": "string"
+    },
+    "item_id": {
+      "type": "string"
+    },
+    "asset_tag": {
+      "type": "string"
+    },
+    "item_name": {
+      "type": "string"
+    },
+    "qty_issued": {
+      "type": "number"
+    },
+    "qty_returned": {
+      "type": "number",
+      "default": 0
+    },
+    "issued_condition": {
+      "type": "string"
+    },
+    "returned_condition": {
+      "type": "string"
+    },
+    "issued_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expected_return_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "returned_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "issued_by": {
+      "type": "string",
+      "description": "Toolkeeper who scanned and released the asset"
+    },
+    "returned_by": {
+      "type": "string",
+      "description": "Toolkeeper who received the return"
+    },
+    "return_requested": {
+      "type": "boolean",
+      "default": false
+    },
+    "notes": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Open",
+        "Partial",
+        "Closed",
+        "Damaged",
+        "Lost"
+      ],
+      "enumColors": [
+        "blue",
+        "yellow",
+        "green",
+        "red",
+        "purple"
+      ],
+      "default": "Open"
+    }
+  },
+  "required": [
+    "borrower_id",
+    "item_id",
+    "qty_issued"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        }
+      ]
+    },
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

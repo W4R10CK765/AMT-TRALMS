@@ -1,0 +1,116 @@
+{
+  "name": "Borrower",
+  "type": "object",
+  "properties": {
+    "full_name": {
+      "type": "string"
+    },
+    "borrower_type": {
+      "type": "string",
+      "enum": [
+        "Student",
+        "Instructor"
+      ],
+      "enumColors": [
+        "blue",
+        "purple"
+      ],
+      "default": "Student"
+    },
+    "id_number": {
+      "type": "string",
+      "description": "Student ID number, or employee ID number for instructors"
+    },
+    "rfid_tag": {
+      "type": "string",
+      "description": "RFID card UID or QR code value carried by the student"
+    },
+    "course": {
+      "type": "string"
+    },
+    "section": {
+      "type": "string"
+    },
+    "course_section": {
+      "type": "string",
+      "description": "Combined course and section label kept in sync for slips and queue displays"
+    },
+    "email": {
+      "type": "string",
+      "format": "email"
+    },
+    "contact": {
+      "type": "string",
+      "description": "Contact number"
+    },
+    "restrictions": {
+      "type": "string",
+      "description": "Borrowing restrictions shown to the toolkeeper (e.g. clearance hold)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Active",
+        "Inactive"
+      ],
+      "enumColors": [
+        "green",
+        "gray"
+      ],
+      "default": "Active"
+    }
+  },
+  "required": [
+    "full_name",
+    "id_number"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        }
+      ]
+    },
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

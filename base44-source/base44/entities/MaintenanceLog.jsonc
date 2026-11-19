@@ -1,0 +1,106 @@
+{
+  "name": "MaintenanceLog",
+  "type": "object",
+  "properties": {
+    "item_id": {
+      "type": "string"
+    },
+    "asset_tag": {
+      "type": "string"
+    },
+    "item_name": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "Maintenance",
+        "Calibration",
+        "Repair"
+      ],
+      "enumColors": [
+        "blue",
+        "purple",
+        "yellow"
+      ],
+      "default": "Maintenance"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "findings": {
+      "type": "string"
+    },
+    "action_taken": {
+      "type": "string"
+    },
+    "cost": {
+      "type": "number"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Open",
+        "Completed"
+      ],
+      "enumColors": [
+        "yellow",
+        "green"
+      ],
+      "default": "Open"
+    }
+  },
+  "required": [
+    "item_id"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        }
+      ]
+    },
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

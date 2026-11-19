@@ -1,0 +1,375 @@
+/* Student tool menu — built from the library "Order Menu" section, restyled to
+   AMT-TRALMS (navy #14306b, red hairline accents, slate panels).
+
+   Load-bearing, do not flatten:
+   1. `.omu-section` declares the size container; `.omu-screen` carries the fixed
+      height + internal scroller. Merge them and every @container switch dies.
+   2. Each `.omu-card` is its own size container, so card type tracks the CARD.
+   3. The whole screen is self-contained: one scroller, bar on its own bottom edge.
+   4. Entrance uses the `translate` property and no animation-delay, so a frozen
+      mount still paints the finished screen. */
+
+.omu-section {
+  --omu-bg: #eef2f7;
+  --omu-panel: #ffffff;
+  --omu-ink: #0f172a;
+  --omu-muted: rgba(15, 23, 42, .58);
+  --omu-cta: #14306b;
+  --omu-accent: #14306b;
+  --omu-tint: #e4ebf8;
+  --omu-red: #be2332;
+  --omu-hairline: rgba(15, 23, 42, .12);
+  --omu-pad: clamp(12px, 2.6cqi, 24px);
+  --omu-gap: 10px;
+  --omu-gutter: clamp(12px, 1.8cqi, 16px);
+  --omu-t: 1.4s;
+  --omu-e: cubic-bezier(.22, .61, .36, 1);
+
+  container: omu-root / inline-size;
+  display: block;
+  width: 100%;
+  font-family: var(--font-body);
+  color: var(--omu-ink);
+  -webkit-font-smoothing: antialiased;
+}
+.omu-section :where(*) { box-sizing: border-box; }
+.omu-section :where(p, h2, h3, ul, li) { margin: 0; padding: 0; list-style: none; }
+.omu-section :where(button) { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+.omu-section :where(:focus-visible) { outline: 2px solid var(--omu-accent); outline-offset: 2px; }
+
+@keyframes omu-screen-in { 0% { opacity: 0; translate: 0 16px; } }
+@keyframes omu-in-06 { 0%, 6% { opacity: 0; translate: 0 12px; } }
+@keyframes omu-in-12 { 0%, 12% { opacity: 0; translate: 0 12px; } }
+@keyframes omu-in-20 { 0%, 20% { opacity: 0; translate: 0 14px; } }
+@keyframes omu-in-24 { 0%, 24% { opacity: 0; translate: 0 14px; } }
+@keyframes omu-in-28 { 0%, 28% { opacity: 0; translate: 0 14px; } }
+@keyframes omu-in-32 { 0%, 32% { opacity: 0; translate: 0 14px; } }
+@keyframes omu-in-36 { 0%, 36% { opacity: 0; translate: 0 14px; } }
+@keyframes omu-in-40 { 0%, 40% { opacity: 0; translate: 0 14px; } }
+@keyframes omu-in-44 { 0%, 44% { opacity: 0; translate: 0 14px; } }
+@keyframes omu-in-48 { 0%, 48% { opacity: 0; translate: 0 14px; } }
+@keyframes omu-in-52 { 0%, 52% { opacity: 0; translate: 0 14px; } }
+@keyframes omu-pop { 0% { scale: 1; } 40% { scale: 1.085; } 100% { scale: 1; } }
+
+.omu-screen {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: clamp(600px, 94cqi, 820px);
+  overflow: hidden;
+  background: var(--omu-bg);
+  border-radius: clamp(12px, 2.5cqi, 22px);
+  animation: omu-screen-in var(--omu-t) var(--omu-e) forwards;
+}
+.omu-screen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 clamp(1.5px, .25cqi, 2px) var(--omu-hairline);
+  pointer-events: none;
+  z-index: 4;
+}
+
+.omu-stage { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+
+.omu-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+  margin-block: var(--omu-gutter);
+  padding: 0 var(--omu-pad) var(--omu-pad);
+  scrollbar-width: thin;
+}
+.omu-screen.has-order .omu-scroll { padding-bottom: calc(var(--omu-pad) + 116px); }
+
+/* wordmark — the app's own lockup, not a stock logo */
+.omu-head { padding-block-end: clamp(14px, 3cqi, 26px); animation: omu-in-06 var(--omu-t) var(--omu-e) forwards; }
+.omu-brand { display: flex; align-items: center; gap: clamp(10px, 1.6cqi, 16px); }
+.omu-brand-mark { width: clamp(4px, .6cqi, 6px); height: clamp(34px, 5cqi, 46px); border-radius: 99px; background: var(--omu-red); }
+.omu-brand-title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(20px, 3.2cqi, 32px);
+  line-height: 1;
+  letter-spacing: -.02em;
+  color: var(--omu-accent);
+}
+.omu-brand-sub {
+  margin-block-start: 6px;
+  font-size: clamp(9px, 1.3cqi, 12px);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--omu-muted);
+}
+
+/* category strip */
+.omu-tabs {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 2;
+  background: var(--omu-bg);
+  display: flex;
+  gap: 8px;
+  margin-inline: calc(var(--omu-pad) * -1);
+  padding: 0 var(--omu-pad) var(--omu-gutter);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: var(--omu-pad);
+  scrollbar-width: none;
+  animation: omu-in-12 var(--omu-t) var(--omu-e) forwards;
+}
+.omu-tabs::-webkit-scrollbar { display: none; }
+
+.omu-tab {
+  flex: 1 0 auto;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: clamp(12px, 2.6cqi, 20px) clamp(14px, 3cqi, 28px);
+  background: var(--omu-panel);
+  border: 1px solid var(--omu-hairline);
+  border-radius: 8px;
+  color: var(--omu-ink);
+  transition: background .2s ease, border-color .2s ease, color .2s ease;
+}
+.omu-tab-en {
+  font-weight: 700;
+  font-size: clamp(12px, 1.6cqi, 15px);
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: .02em;
+  white-space: nowrap;
+}
+.omu-tab-sub {
+  font-family: var(--font-mono);
+  font-size: clamp(9px, 1.1cqi, 11px);
+  line-height: 1.25;
+  color: var(--omu-muted);
+  white-space: nowrap;
+}
+.omu-tab:hover { background: #f6f8fc; }
+.omu-tab[aria-selected="true"] {
+  background: var(--omu-accent);
+  border-color: var(--omu-accent);
+  color: #fff;
+}
+.omu-tab[aria-selected="true"] .omu-tab-sub { color: rgba(255, 255, 255, .78); }
+
+/* grid */
+.omu-grid { display: grid; grid-template-columns: 1fr; gap: var(--omu-gap); }
+@container omu-root (width >= 560px) { .omu-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@container omu-root (width >= 860px) { .omu-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@container omu-root (width >= 1180px) { .omu-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+.omu-card {
+  container: omu-card / inline-size;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--omu-panel);
+  border-radius: 10px;
+  overflow: hidden;
+  outline: 2px solid transparent;
+  outline-offset: -2px;
+  transition: outline-color .25s ease, background .25s ease;
+  animation: omu-in-28 var(--omu-t) var(--omu-e) forwards;
+}
+.omu-card:nth-child(2) { animation-name: omu-in-32; }
+.omu-card:nth-child(3) { animation-name: omu-in-36; }
+.omu-card:nth-child(4) { animation-name: omu-in-40; }
+.omu-card:nth-child(5) { animation-name: omu-in-44; }
+.omu-card:nth-child(6) { animation-name: omu-in-48; }
+.omu-card:nth-child(7) { animation-name: omu-in-52; }
+.omu-card:nth-child(n + 8) { animation-name: omu-in-52; }
+.omu-card.is-picked { outline-color: var(--omu-accent); background: var(--omu-tint); }
+
+.omu-shot { position: relative; aspect-ratio: 1 / 1; overflow: hidden; background: var(--omu-tint); }
+.omu-shot img { width: 100%; height: 100%; object-fit: cover; }
+
+.omu-add {
+  position: absolute;
+  inset-block-start: 2.5cqi;
+  inset-inline-end: 2.5cqi;
+  width: max(34px, 11cqi);
+  height: max(34px, 11cqi);
+  display: grid;
+  place-items: center;
+  background: #fff;
+  color: var(--omu-cta);
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, .18);
+  transition: background .18s ease, scale .12s ease;
+}
+.omu-add::before {
+  content: '';
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-end: 0;
+  width: 44px;
+  height: 44px;
+}
+.omu-add:hover { background: #f2f5fb; }
+.omu-add:active { scale: .92; }
+
+/* quantity chip: hidden at rest, revealed by state. Same number as the bar. */
+.omu-chip {
+  position: absolute;
+  inset-block-start: 2.5cqi;
+  inset-inline-start: 2.5cqi;
+  min-width: max(26px, 8cqi);
+  height: max(26px, 8cqi);
+  display: grid;
+  place-items: center;
+  padding-inline: 6px;
+  background: var(--omu-accent);
+  color: #fff;
+  border-radius: 99px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: clamp(11px, 4.4cqi, 14px);
+  opacity: 0;
+  scale: .8;
+  transition: opacity .2s ease, scale .2s ease;
+}
+.omu-card.is-picked .omu-chip { opacity: 1; scale: 1; }
+
+.omu-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: clamp(10px, 7cqi, 18px);
+  padding: clamp(14px, 8cqi, 22px);
+  text-align: center;
+}
+.omu-names { display: flex; flex-direction: column; align-items: center; }
+.omu-card-tag {
+  font-family: var(--font-mono);
+  font-size: clamp(10px, 4.6cqi, 12px);
+  letter-spacing: .06em;
+  color: var(--omu-muted);
+  text-transform: uppercase;
+}
+.omu-name {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(16px, 8.4cqi, 23px);
+  line-height: 1.15;
+  letter-spacing: -.02em;
+  text-wrap: balance;
+  margin-block-start: clamp(4px, 1.6cqi, 6px);
+}
+.omu-meta {
+  font-family: var(--font-mono);
+  font-size: clamp(12px, 5.6cqi, 15px);
+  line-height: 1.2;
+  white-space: nowrap;
+  color: var(--omu-muted);
+}
+.omu-meta b { color: var(--omu-ink); }
+
+.omu-empty {
+  padding: clamp(28px, 6cqi, 54px) clamp(16px, 4cqi, 32px);
+  text-align: center;
+  background: var(--omu-panel);
+  border-radius: 10px;
+  font-size: clamp(13px, 1.6cqi, 15px);
+  line-height: 1.55;
+  color: var(--omu-muted);
+}
+
+/* order bar — an overlay, absent until there is a selection */
+.omu-bar {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(12px, 2.4cqi, 20px);
+  padding: clamp(12px, 2cqi, 18px) clamp(14px, 4cqi, 34px);
+  background: var(--omu-panel);
+  border-top: 2px solid var(--omu-cta);
+  box-shadow: 0 -14px 24px rgba(15, 23, 42, .10);
+  transform: translateY(100%);
+  visibility: hidden;
+  transition: transform .38s var(--omu-e), visibility .38s var(--omu-e);
+}
+.omu-screen.has-order .omu-bar { transform: none; visibility: visible; }
+@container omu-root (width < 520px) {
+  .omu-bar { flex-direction: column; align-items: stretch; }
+  .omu-cta { width: 100%; justify-content: center; }
+}
+
+.omu-total { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.omu-total-label {
+  font-weight: 600;
+  font-size: clamp(11px, 1.4cqi, 13px);
+  line-height: 1.15;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--omu-muted);
+}
+.omu-total-val {
+  display: flex;
+  align-items: baseline;
+  gap: clamp(8px, 1.4cqi, 12px);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: clamp(16px, 2.4cqi, 22px);
+  line-height: 1.15;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.omu-dot { flex: 0 0 auto; width: 6px; height: 6px; border-radius: 50%; background: var(--omu-ink); translate: 0 -.18em; }
+.omu-total-val > span:not(.omu-dot) { display: inline-block; }
+.omu-total-val.is-bumped > span:not(.omu-dot) { animation: omu-pop .26s var(--omu-e); }
+
+.omu-cta {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(8px, 1.4cqi, 12px);
+  padding: 12px clamp(14px, 2.4cqi, 22px) 12px clamp(18px, 3cqi, 26px);
+  background: var(--omu-cta);
+  border-radius: 999px;
+  color: #fff;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(14px, 1.9cqi, 17px);
+  line-height: 1.2;
+  transition: background .2s ease, scale .12s ease, opacity .28s ease;
+}
+.omu-cta svg { flex: 0 0 auto; width: clamp(16px, 2cqi, 19px); height: clamp(16px, 2cqi, 19px); transition: translate .22s var(--omu-e); }
+.omu-cta:hover { background: #0e2350; }
+.omu-cta:hover svg { translate: 4px 0; }
+.omu-cta:active { scale: .985; }
+.omu-cta:disabled { opacity: .38; cursor: default; }
+.omu-cta:disabled:hover { background: var(--omu-cta); }
+.omu-cta:disabled:hover svg { translate: 0 0; }
+
+.omu-sr {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .omu-section :where(*),
+  .omu-screen,
+  .omu-card { animation: none !important; transition-duration: .01ms !important; }
+}

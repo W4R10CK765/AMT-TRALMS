@@ -1,0 +1,133 @@
+{
+  "name": "Item",
+  "type": "object",
+  "properties": {
+    "asset_tag": {
+      "type": "string",
+      "description": "Unique asset tag"
+    },
+    "name": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
+    },
+    "brand_model": {
+      "type": "string"
+    },
+    "serial_no": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "unit_cost": {
+      "type": "number"
+    },
+    "condition": {
+      "type": "string",
+      "enum": [
+        "Good",
+        "Fair",
+        "Poor"
+      ],
+      "enumColors": [
+        "green",
+        "yellow",
+        "red"
+      ],
+      "default": "Good"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Active",
+        "Under Maintenance",
+        "Retired"
+      ],
+      "enumColors": [
+        "green",
+        "yellow",
+        "gray"
+      ],
+      "default": "Active"
+    },
+    "is_consumable": {
+      "type": "boolean",
+      "default": false
+    },
+    "min_stock": {
+      "type": "number",
+      "default": 0
+    },
+    "qty_total": {
+      "type": "number",
+      "default": 1
+    },
+    "qty_available": {
+      "type": "number",
+      "default": 1
+    },
+    "calibration_required": {
+      "type": "boolean",
+      "default": false
+    },
+    "calibration_due": {
+      "type": "string",
+      "format": "date"
+    }
+  },
+  "required": [
+    "asset_tag",
+    "name"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        }
+      ]
+    },
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

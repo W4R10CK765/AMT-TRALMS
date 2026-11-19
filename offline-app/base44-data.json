@@ -1,0 +1,76 @@
+{
+  "format": "AMT-TRALMS Base44 migration",
+  "version": 1,
+  "exportedAt": "2026-11-19T17:13:40.045Z",
+  "data": {
+    "Item": [],
+    "Borrower": [
+      {
+        "full_name": "Adrian N Lim",
+        "borrower_type": "Student",
+        "id_number": "23-CC0462",
+        "rfid_tag": null,
+        "course": "",
+        "section": "",
+        "course_section": "",
+        "email": "adrian.nicolas.lim@gmail.com",
+        "contact": "09995692156",
+        "restrictions": null,
+        "status": "Active",
+        "id": "6af2a6547187e34c7bd66aa4",
+        "created_date": "2026-11-10T05:06:28.391000",
+        "updated_date": "2026-11-10T05:06:28.391000",
+        "created_by_id": "6af073a48692ae92af878b3d",
+        "is_sample": false
+      },
+      {
+        "full_name": "Adrian Nicolas Lim",
+        "borrower_type": "Student",
+        "id_number": "23-CC0461",
+        "rfid_tag": null,
+        "course": "BSAMT",
+        "section": "4J",
+        "course_section": "BSAMT - 4J",
+        "email": "adrian.nicolas.lim@gmail.com",
+        "contact": "adrian.nicolas.lim@gmail.com",
+        "restrictions": null,
+        "status": "Inactive",
+        "id": "6af2924e48ad33bf0ccd996c",
+        "created_date": "2026-11-10T03:41:02.916000",
+        "updated_date": "2026-11-10T05:06:33.581000",
+        "created_by_id": "6af073a48692ae92af878b3d",
+        "is_sample": false
+      }
+    ],
+    "BorrowRequest": [],
+    "Loan": [
+      {
+        "trans_no": "TR-20261108-131117",
+        "borrower_id": "6af074f426daba0337f37883",
+        "borrower_name": "Test Borrower",
+        "borrower_id_number": "ZZ-2",
+        "course_section": null,
+        "purpose": "",
+        "item_id": "6af074f316854432f1de4f02",
+        "asset_tag": "ZZ-TEST-2",
+        "item_name": "Test Torque",
+        "qty_issued": 1,
+        "qty_returned": 1,
+        "issued_condition": "Good",
+        "returned_condition": "Good",
+        "issued_at": "2026-11-08T13:11:17.120Z",
+        "expected_return_at": "2026-11-09T13:11:00.000Z",
+        "returned_at": "2026-11-08T13:11:21.980Z",
+        "notes": "",
+        "status": "Closed",
+        "id": "6af074f508d1548931987e91",
+        "created_date": "2026-11-08T13:11:17.406000",
+        "updated_date": "2026-11-08T13:11:22.071000",
+        "created_by_id": "6af073a48692ae92af878b3d",
+        "is_sample": false
+      }
+    ],
+    "MaintenanceLog": [],
+    "AuditLog": []
+  }
+}
