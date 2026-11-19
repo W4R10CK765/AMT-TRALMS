@@ -1,8 +1,8 @@
 # AMT-TRALMS
 
-Prototype source and local editions of the AMT-TRALMS application.
+Private project archive for the AMT-TRALMS prototype.
 
-## Contents
+Download `AMT-TRALMS-source-and-data.zip` and extract it to access:
 
 - `base44-source/` — original Base44 React/Vite prototype source.
 - `offline-app/` — standalone browser edition and its `base44-data.json` imported records.
@@ -10,18 +10,12 @@ Prototype source and local editions of the AMT-TRALMS application.
 
 ## Data and privacy
 
-The included records are real application data and may contain personal borrower information. Keep this repository **private**. Do not publish it publicly or share access with anyone who should not see those records.
+This bundle includes real application data and may contain personal borrower information. Keep this repository **private** and only share it with people authorized to see those records.
 
-The offline JSON export currently contains 2 borrower records and 1 loan record. The database files are included as copied from the local vault.
+The offline JSON export contains 2 borrower records and 1 loan record. The local SQLite database copies are included in the bundle.
 
-## Run the offline edition
+## Run the apps
 
-See `offline-app/README.md` for its launch instructions.
+See `offline-app/README.md` for the offline browser edition. On Windows, run `desktop-app/Open AMT-TRALMS Desktop.bat` for the desktop edition after extracting the archive.
 
-## Run the desktop edition
-
-On Windows, launch `desktop-app/Open AMT-TRALMS Desktop.bat`.
-
-## Base44 prototype source
-
-See `base44-source/README.md` for project setup information. The live Base44 service may require network access and credentials; the local offline edition is separate.
+The Base44 source may require network access and credentials to connect to the live Base44 service. The offline edition runs separately.
